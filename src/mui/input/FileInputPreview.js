@@ -21,12 +21,20 @@ const styles = {
     },
 };
 
-export class ImageInputPreview extends Component {
+export class FileInputPreview extends Component {
     constructor(props) {
         super(props);
         this.state = {
             hovered: false,
         };
+    }
+
+    componentWillUnmount() {
+        const { file } = this.props;
+
+        if (file && file.preview && window.URL && window.URL.revokeObjectURL) {
+            URL.revokeObjectURL(file.preview);
+        }
     }
 
     handleMouseOut = () => this.setState({ hovered: false });
@@ -57,9 +65,14 @@ export class ImageInputPreview extends Component {
     }
 }
 
-ImageInputPreview.propTypes = {
+FileInputPreview.propTypes = {
     children: PropTypes.element.isRequired,
+    file: PropTypes.object,
     onRemove: PropTypes.func.isRequired,
 };
 
-export default ImageInputPreview;
+FileInputPreview.defaultProps = {
+    file: undefined,
+};
+
+export default FileInputPreview;

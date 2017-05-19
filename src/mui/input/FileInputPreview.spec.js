@@ -3,16 +3,16 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import sinon from 'sinon';
 
-import { ImageInputPreview } from './ImageInputPreview';
+import { FileInputPreview } from './FileInputPreview';
 
 describe('<ImageInputPreview />', () => {
     it('should call `onRemove` prop when clicking on remove button', () => {
         const onRemoveSpy = sinon.spy();
 
         const wrapper = shallow((
-            <ImageInputPreview onRemove={onRemoveSpy}>
+            <FileInputPreview onRemove={onRemoveSpy}>
                 <div>Child</div>
-            </ImageInputPreview>
+            </FileInputPreview>
         ));
 
         const removeButton = wrapper.find('FlatButton');
@@ -23,9 +23,9 @@ describe('<ImageInputPreview />', () => {
 
     it('should render passed children', () => {
         const wrapper = shallow((
-            <ImageInputPreview>
+            <FileInputPreview>
                 <div id="child">Child</div>
-            </ImageInputPreview>
+            </FileInputPreview>
         ));
 
         const child = wrapper.find('#child');
