@@ -32,8 +32,8 @@ export class FileInputPreview extends Component {
     componentWillUnmount() {
         const { file } = this.props;
 
-        if (file && file.preview && window.URL && window.URL.revokeObjectURL) {
-            URL.revokeObjectURL(file.preview);
+        if (file && file.preview && window && window.URL && window.URL.revokeObjectURL) {
+            window.URL.revokeObjectURL(file.preview);
         }
     }
 

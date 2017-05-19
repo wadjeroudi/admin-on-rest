@@ -31,4 +31,42 @@ describe('<ImageInputPreview />', () => {
         const child = wrapper.find('#child');
         assert.equal(child.length, 1);
     });
+
+    it('should clean up generated URLs for preview', () => {
+        const file = { preview: 'previewUrl' };
+        const revokeObjectURL = sinon.spy();
+
+        global.window = {
+            URL: {
+                revokeObjectURL,
+            },
+        };
+        const wrapper = shallow((
+            <FileInputPreview file={file}>
+                <div id="child">Child</div>
+            </FileInputPreview>
+        ), { lifecycleExperimental: true });
+
+        wrapper.unmount();
+        assert(revokeObjectURL.calledWith('previewUrl'));
+    });
+
+    it('should not try to clean up preview urls if not passed a File object with a preview', () => {
+        const file = {};
+        const revokeObjectURL = sinon.spy();
+
+        global.window = {
+            URL: {
+                revokeObjectURL,
+            },
+        };
+        const wrapper = shallow((
+            <FileInputPreview file={file}>
+                <div id="child">Child</div>
+            </FileInputPreview>
+        ), { lifecycleExperimental: true });
+
+        wrapper.unmount();
+        assert(revokeObjectURL.notCalled);
+    });
 });
