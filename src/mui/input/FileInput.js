@@ -20,9 +20,37 @@ const defaultStyle = {
 };
 
 export class FileInput extends Component {
+    static propTypes = {
+        accept: PropTypes.string,
+        children: PropTypes.element,
+        disableClick: PropTypes.bool,
+        elStyle: PropTypes.object,
+        input: PropTypes.object,
+        itemStyle: PropTypes.object,
+        labelMultiple: PropTypes.string,
+        labelSingle: PropTypes.string,
+        maxSize: PropTypes.number,
+        minSize: PropTypes.number,
+        multiple: PropTypes.bool,
+        removeStyle: PropTypes.object,
+        style: PropTypes.object,
+        placeholder: PropTypes.node,
+    };
+
+    static defaultProps = {
+        addLabel: true,
+        addField: true,
+        itemStyle: {},
+        labelMultiple: 'aor.input.file.upload_several',
+        labelSingle: 'aor.input.file.upload_single',
+        multiple: false,
+        onUpload: () => {},
+        removeStyle: { display: 'inline-block' },
+    };
+
     constructor(props) {
         super(props);
-
+        console.log({ props });
         let files = props.input.value || [];
         if (!Array.isArray(files)) {
             files = [files];
@@ -104,10 +132,12 @@ export class FileInput extends Component {
             children,
             disableClick,
             elStyle,
+            itemStyle,
             maxSize,
             minSize,
             multiple,
             style,
+            removeStyle,
         } = this.props;
 
         const finalStyle = {
@@ -134,7 +164,9 @@ export class FileInput extends Component {
                             <FileInputPreview
                                 key={index}
                                 file={file}
+                                itemStyle={itemStyle}
                                 onRemove={this.onRemove(file)}
+                                removeStyle={removeStyle}
                             >
                                 {React.cloneElement(children, {
                                     record: file,
@@ -148,29 +180,5 @@ export class FileInput extends Component {
         );
     }
 }
-
-FileInput.propTypes = {
-    accept: PropTypes.string,
-    children: PropTypes.element,
-    disableClick: PropTypes.bool,
-    elStyle: PropTypes.object,
-    input: PropTypes.object,
-    labelMultiple: PropTypes.string,
-    labelSingle: PropTypes.string,
-    maxSize: PropTypes.number,
-    minSize: PropTypes.number,
-    multiple: PropTypes.bool,
-    style: PropTypes.object,
-    placeholder: PropTypes.node,
-};
-
-FileInput.defaultProps = {
-    addLabel: true,
-    addField: true,
-    labelMultiple: 'aor.input.file.upload_several',
-    labelSingle: 'aor.input.file.upload_single',
-    multiple: false,
-    onUpload: () => {},
-};
 
 export default translate(FileInput);

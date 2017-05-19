@@ -1,21 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
 import { pinkA200 } from 'material-ui/styles/colors';
 import RemoveCircle from 'material-ui/svg-icons/content/remove-circle';
 
 const styles = {
-    container: {
-        display: 'inline-block',
-        position: 'relative',
-    },
-    removeButton: {
-        position: 'absolute',
-        top: '0.5rem',
-        right: '0.5rem',
-        minWidth: '2rem',
-        opacity: 0,
-    },
     removeButtonHovered: {
         opacity: 1,
     },
@@ -41,24 +30,25 @@ export class FileInputPreview extends Component {
     handleMouseOver = () => this.setState({ hovered: true });
 
     render() {
-        const { children, onRemove } = this.props;
+        const { children, onRemove, itemStyle, removeStyle } = this.props;
 
         const removeButtonStyle = this.state.hovered ? {
-            ...styles.removeButton,
+            ...removeStyle,
             ...styles.removeButtonHovered,
-        } : styles.removeButton;
+        } : removeStyle;
 
         return (
             <div
                 onMouseOver={this.handleMouseOver}
                 onMouseOut={this.handleMouseOut}
-                style={styles.container}
+                style={itemStyle}
             >
-                <FlatButton
+                <IconButton
                     style={removeButtonStyle}
-                    icon={<RemoveCircle color={pinkA200} />}
                     onClick={onRemove}
-                />
+                >
+                    <RemoveCircle color={pinkA200} />
+                </IconButton>
                 {children}
             </div>
         );
@@ -69,10 +59,14 @@ FileInputPreview.propTypes = {
     children: PropTypes.element.isRequired,
     file: PropTypes.object,
     onRemove: PropTypes.func.isRequired,
+    itemStyle: PropTypes.object,
+    removeStyle: PropTypes.object,
 };
 
 FileInputPreview.defaultProps = {
     file: undefined,
+    itemStyle: {},
+    removeStyle: { display: 'inline-block' },
 };
 
 export default FileInputPreview;

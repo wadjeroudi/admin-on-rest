@@ -5,7 +5,7 @@ import sinon from 'sinon';
 
 import { FileInputPreview } from './FileInputPreview';
 
-describe('<ImageInputPreview />', () => {
+describe('<FileInputPreview />', () => {
     it('should call `onRemove` prop when clicking on remove button', () => {
         const onRemoveSpy = sinon.spy();
 
@@ -15,7 +15,7 @@ describe('<ImageInputPreview />', () => {
             </FileInputPreview>
         ));
 
-        const removeButton = wrapper.find('FlatButton');
+        const removeButton = wrapper.find('IconButton');
         removeButton.simulate('click');
 
         assert.equal(onRemoveSpy.args.length, 1);

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash.get';
 
-export const FileField = ({ elStyle = {}, record, source, title, src }) => {
+export const FileField = ({ elStyle = { display: 'inline-block' }, record, source, title, src }) => {
     const sourceValue = get(record, source);
 
     if (!sourceValue) {
